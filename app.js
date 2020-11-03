@@ -1,8 +1,23 @@
 var createError = require('http-errors');
+//  biblioteka do ciasteczek !
+var cookieSession = require('cookie-session')
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+//  zaimportowna z config.js z routes !
+var config=require('./config')
+
+//  łaczneie z baza dancyh !
+var mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017', {useNewUrlParser: true});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('db connsect');
+});
 
 var indexRouter = require('./routes/index');
 var newsRouter = require('./routes/news');
@@ -22,10 +37,22 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// uzywnaie naszej biblioteki do ciasteczke !
+app.use(cookieSession({
+  name: 'session',
+  keys: config.ketSession,
+  // ten keys bedzie trudneijszy do podmiany, opcje te beda łądowne z pliu konfiguracyjnego i ten plik sobie zaraz utworsymy !
+  // znajduje sie w routes i nazywa sie config.js
+/* secret keys */ 
+  // Cookie Options
+  maxAge: config.maxAge,
+}))
+
 // tutaj ! bedzimey uzywac ! 
 app.use(function(req,res,next){
   // console.log(req.path);
   res.locals.path=req.path;
+  res.locals.dupa='gej'
   next();
 });
 // ^  cokolwiek sie dzije to pobiera nam scieżke ! czy tutaj mozna byoby przechowywac dane np kto sie zalogował?
