@@ -44,6 +44,7 @@ router.post('/login',(req,res)=>{
   console.log('ktoś chce się zalogować !!!!!!!!');
   // sprawdzanie czy w bazie danych jest taki uzytkownik z hasłem i loginem zgadzjacym sie  z wymaganymi
   const body=req.body;
+  // console.log(req.body);
   LoginModels.findOne({ login:body.login},(err,data)=>{
     console.log('osoba ktora sie logje to :',data);
     if(data.login===body.login && data.password===body.password){

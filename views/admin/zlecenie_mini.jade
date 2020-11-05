@@ -1,0 +1,44 @@
+extends ../layout
+
+block content
+  h1= title
+  h2=' Jest to wersja mocno skrócona taka "mini aby pokazać że działa i jak dział tylko bez ponad 30 elementów a tylko wybrany"  '
+    h2='drugi zdecydowanie obszernieszy formularz jest dostepny pod innym linkiem '
+  form(method='post')
+    p
+        label oznaczenie porządkowe dotyczące przychodzącego zestawu (pole to składa się z 'zlecajacego' i czegoś jeszcze tak?)
+        input(type="text" name='ozn_wejscia')
+    p
+        label zlecajacy(czyli kto zamówił?)
+        input(type="text" name="zlecajacy")
+    p
+        label numer Świadectwa
+        input(type="text" name='nr_swiadectwa')
+        //- data otrzymania zlecenia bedzie domyslnie 
+    p
+        label  data otrzymania zlecenia
+        input(type="date" name='d_otrzymania')
+    p
+        label płatnik nazwa (czyli cżłowiek, poloa wcześnie 'zlecający' to firma)
+        input(type="text" name="platnik_nazwa")
+    p
+        label  data zlecenia (w sensie na kiedy ma być gotowe?)
+        input(type="date" name='d_zlecenia')
+    p
+        label  data wykonania świadectwa (jak sie nic nie poda to bedzie można to i tak edytować?)
+        input(type="date" name='d_wyk_swiadectwa')
+    p
+        label kto zatwierdził będzie już zależało od tego kto był zalogowany w momencie dodawanie / edycji zlecenia 
+    p 
+        label czy opłacono zlecenie?
+        br
+        input(type="radio" name='oplacono' value='nie')
+        label nie opłacono zamówienia 
+        br
+        input(type="radio" name='oplacono' value='tak')
+        label opłacono zamówienie 
+    p
+        label cena brutto (cena naetto i vat sam sie doda)
+        input(type="number" name="c_brutto" min="0" max="100000")
+    p
+        input(type="submit" name='title')

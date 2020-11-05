@@ -1,0 +1,217 @@
+extends ../layout
+
+block content
+  h1= title
+  form(metod='post')
+    h2=' póki co pola na text nie powiększają się jak napiszę się w nich zbyt dużo danych, a domyślnie tak chyba będzie lepiej? Zastanawiam się też które pola można pominąć w etapie dodawania nowego zlecenia z tym, że jak ktoś będzie dodawał "stare zlecenia czyli takie już zrealiozowane albo takie które już jest na pewnym etapie realizacji " to lepiej aby mogły być one aktywne , chyba ze na taką ewnentualność stowrzy się  nowy formularz, w którym każde możliwe pole jest do wypełnienia i wtedy nazywałoby się to np. "dodaj zlecenie, które jest już w trakcie wykonywania albo jest już zrealiozwane"  '
+    p
+        label oznaczenie porządkowe dotyczące przychodzącego zestawu (pole to składa się z 'zlecajacego' i czegoś jeszcze tak?)
+        input(type="text" name='ozn_wejscia')
+    p
+        label numer UTESTA'a
+        input(type="text" name='utesta')
+    p
+        label numer Świadectwa
+        input(type="text" name='nr_swiadectwa')
+        //- data otrzymania zlecenia bedzie domyslnie 
+    p
+        label  data otrzymania zlecenia
+        input(type="date" name='d_otrzymania')
+    p
+        label numer zlecenia
+        input(type="text" name='nr_zlecenia')
+    p
+        label  data zlecenia (w sensie na kiedy ma być gotowe?)
+        input(type="date" name='d_zlecenia')
+    p
+        label  data wykonania wzorcowań (jak sie nic nie poda to bedzie można to i tak edytować?)
+        input(type="date" name='d_wyk_wzorcowan')
+    p
+        label  data wykonania świadectwa (jak sie nic nie poda to bedzie można to i tak edytować?)
+        input(type="date" name='d_wyk_swiadectwa')
+    p
+        label  data  protokołu przkeazania miernika? (czyli kiedy miernik został przekazany ?)
+        input(type="date" name='d_wyd_s')
+    p
+        label kto zatwierdził będzie już zależało od tego kto się zalogował przynajmniej powinno ale można zrobic w ten sposób aby możliwe było wpisanie cokolwiek, a gdy się zostawi to pole puste domyślnie wpisze tam osoby bedacej obecnie zalogowanej
+    p
+        label ile stron( ale jakich stron ?)
+        input(type="number" name="ile_stron" min="0" max="1000")
+    p 
+        label przedmiot wzorcowan (czy tutaj bedzie możliwe np 20 przypadków czy niezliczona ilosc?)
+        input(type="text" name="prz_wzorcowan")
+    p
+        label zlecajacy(czyli kto zamówił?)
+        input(type="text" name="zlecajacy")
+    p
+        label użytkownik (co się może znajdowac w tym polu?)
+        input(type="text" name="user")
+    p
+        label zlecenie nazwa(czyli np miernik z 3 sonadmi ? )
+        input(type="text" name="nazwa_zlecenia")
+    p
+        label adres zlecenia (czyli gdzie dane zlecenie zostanei wysłane ?)
+        input(type="text" name="adres_zlecenia")
+    p
+        label użytkownik adres do wysyłki czy to nie jest to samo co zlecenie_adres? 
+        input(type="text" name="uzytkownik_zlecenia")
+    p
+        label procent pommiarów? (ile wykonano pomiarów w stosunku do wszystkich potrzbnych "progres?") 
+        input(type="number" name="ile_procent" min="0" max="1000")
+    p
+        label metoda pomiaru (czy jest ona na tyle powtarzalna, że można byłoby zastosowac np 3 wybory? )
+        input(type="text" name="metoda_pomiaru")
+    p
+        label temperatura otoczenia 1? 
+        input(type="number" name="jaka_temp1" min="-100" max="1000")
+    p
+        label temperatura otoczenia 2? 
+        input(type="number" name="jaka_temp2" min="-100" max="1000")
+    p
+        label wilgotnosc względna 1
+        input(type="number" name="wilgotnosc_1" min="0" max="100")
+    p
+        label wilgotnosc względna 2
+        input(type="number" name="wilgotnosc_2" min="0" max="100")
+    h2="Nie wiem co to jest str2_sonda str2_mierni i jak to przedstawić dokładnie, możliwe aby miernik nagle dostał dodatkową sonde? np w wyniku zmiany zlecenia czy coś podobnego?" 
+    p
+        label str2_sonda
+        input(type="text" name="str2_sonda")
+    p
+        label str2_miernik?
+        input(type="text" name="str2_miern")
+    p
+        label str3_sonda
+        input(type="text" name="str3_sonda")
+    p
+        label str3_miernik?
+        input(type="text" name="str3_miern")
+    p
+        label str4_sonda
+        input(type="text" name="str4_sonda")
+    p
+        label str4_miernik?
+        input(type="text" name="str4_miern")
+    p
+        label str5_sonda
+        input(type="text" name="str5_sonda")
+    p
+        label str5_miernik?
+        input(type="text" name="str5_miern")
+    p
+        label str6_sonda
+        input(type="text" name="str6_sonda")
+    p
+        label str6_miernik?
+        input(type="text" name="str6_miern")
+    p
+        label str7_sonda
+        input(type="text" name="str7_sonda")
+    p
+        label str7_miernik?
+        input(type="text" name="str7_miern")
+    p
+        label str8_sonda
+        input(type="text" name="str8_sonda")
+    p
+        label str8_miernik?
+        input(type="text" name="str8_miern")
+    p
+        label str9_sonda
+        input(type="text" name="str9_sonda")
+    p
+        label str9_miernik?
+        input(type="text" name="str9_miern")
+
+
+    h2=" od czego zależy ilość stron i czy nei ma probnelmu aby domyślnie były one puste?"
+    p
+        label str2_nagłówek (dlaczego jest 8 stron ?:D i też czy sie beda powtarzać dane?)
+        input(type="text" name="nagłowek_str2")
+
+    p
+        label str3_nagłówek (co tu może być?)
+        input(type="text" name="nagłowek_str3")
+    p
+        label str4_nagłówek (co tu może być?)
+        input(type="text" name="nagłowek_str4")
+    p
+        label str5_nagłówek (co tu może być?)
+        input(type="text" name="nagłowek_str5")
+    p
+        label str6_nagłówek (co tu może być?)
+        input(type="text" name="nagłowek_str6")
+    p
+        label str7_nagłówek (co tu może być?)
+        input(type="text" name="nagłowek_str7")
+    p
+        label str8_nagłówek (co tu może być?)
+        input(type="text" name="nagłowek_str8")
+    h2= "ceny, tutaj należy szczególnie uważać!"
+    p
+        label cena netto
+        input(type="number" name="cena_netto" min="0" max="100000")
+    p
+        label Cena netto słownie (proponuje aby dodawało się to automatycznie na podstawie danych z pola 'ceny netto', zrobiłbym tablice z stringami albo tak zwanego jsona np dla cyfr bedacych 3 od prawej czyli 1='sto',2= 'dwieśćie',3='trzysta',.... i dla dziesiątek (2 prawej) to samo tylko że od 20 bo dla 19 bedzie 'dziewiętnascie' a nie 'dziesiec dziewięć' i dla jednosci to samo :D  także to pole  można pominąć w dodwaniau ale w bazie dnaych będzie samo dodawane przez program)
+        input(type="text" name="cena_netto_slownie")
+    
+    p
+        label cena brutto (czy stawka jest zawsze tkaa sama? jak tak to można pominąc to pole i zostawić dla programu aby sobie obliczył)
+        input(type="number" name="cena_brutto" min="0" max="100000")
+    p
+        label Cena netto brutto słownie( proponuje to samo co dla 'ceny netto słownie')
+        input(type="text" name="cena_brutto_slownie")
+    p
+        label VAT (idąc poprzednim tokiek rozumowania można to pole pominąć przy dodawnaiu i program sam to obliczy)
+        input(type="number" name="cena_netto" min="0" max="100000")
+    p
+        label płatnik nazwa (czyli cżłowiek, poloa wcześnie 'zlecający' to firma)
+        input(type="text" name="platnik_nazwa")
+    p
+        label płatnik adres (czyli może się różnic od  'użytkownik adres do wysyłki ' )
+        input(type="text" name="platnik_adres")
+    p
+        label nip firmy czy politechniki?
+        input(type="text" name="nip")
+    p
+        label data FV to jest data wystawienia faktury?
+        input(type="date" name="data_FV")
+    p
+        label termin zapłaty
+        input(type="date" name="termin_zaplaty")
+    p
+        label data zapłaty
+        input(type="date" name="data_zaplaty")
+    p
+        label nr tutaj nie mam pojęcia o co chodzi na tą chwile 
+        input(type="number" name="faktura_nr" min="0" max="100000")
+    p
+        label czy  tutaj jest miesiąc?
+        input(type="number" name="faktura_nr" min="0" max="100000")
+    p
+
+        label uwagi do zlecenia czyli te jakie przesyła zlecający?
+        textarea(name='description_zlecenie')
+    p 
+        label czy opłacono zlecenie?
+        br
+        input(type="radio" name='oplacono' value='nie')
+        label nie opłacono zamówienia 
+        br
+        input(type="radio" name='oplacono' value='tak')
+        label opłacono zamówienie 
+        //- input(type="radio")
+    p
+        label uwagi do faktury 
+        textarea(name='description_faktura')
+    p
+        label czas realizacji zamówienia ?
+        input(type="number" name="czas_realizacji" min="0" max="100000")
+    p
+        label uwagi do czasu realizacji
+        textarea(name='description_czas_realizacji')
+    p
+        label planowy termin wykonania zlecenia
+        input(type="date" name="termin_wykonania_zlecenia")
+    p
+        input(type="submit" name='title')

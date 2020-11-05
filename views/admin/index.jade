@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+  h1= title
+  p Witaj na  #{title}
+  p Jesteś zalogowany jako #{user} 
+  p Każda zmiana jaka wprowadzisz będzie podpisana twoim podpisem #{signature}
+  p Mozesz teraz dodawać i modyfikowac już istniejące zlecenia !
+  div (wersja mini działajaca)
+    p
+      a(href='/admin/mini/add') Dodaj Zlecenie 
+
+  
+  div ( werjsa z prawie wszystkimi polami z exela, jeszcze nie działa przesyłanie)
+    p
+      a(class='notactive' href="/admin/zlecenie/add")  (jeszcze nie działa )! 
+  div Możesz edytować istniejące zlecenia
+    p
+      a(class='notactive' href="#")  (jeszcze nie działa )!
+  div Sprawdź dodane już zlecenia i ich statusy !
+    p 
+      a(class='notactive' href="#")  (jeszcze nie działa )!
+
