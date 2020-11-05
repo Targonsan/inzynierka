@@ -45,7 +45,7 @@ router.get('/zlecenie/add',(req,res)=>{
 });
 
 router.get('/mini/add',(req,res)=>{
-  res.render('admin/zlecenie_mini',{title:'Dodaj zlecenie'});
+  res.render('admin/zlecenie_mini',{title:'Dodaj zlecenie',body:{},errors:{}});
 
 
 });
@@ -54,9 +54,13 @@ router.post('/mini/add',(req,res)=>{
   
   const body=req.body;
   console.log('dupa')
-  console.log(body);
+  // console.log(body);
   // funkcja sprawdzajaca co się podało w formualrzu w radio buttons
+  // console.log(body.oplacono,'to co wykonało się w body.oplacono');
+  let b
+  console.log('czym ejst b?',b);
   const Radio_button=isPayed(body.oplacono)
+  // console.log(Radio_button);
   const vat=0.23*body.c_brutto;
   const cena_net=body.c_brutto -  vat;
   console.log("vat: ",vat,' cena netto: ',cena_net );
@@ -76,12 +80,18 @@ router.post('/mini/add',(req,res)=>{
     whoAdd:req.session.userSignature,
 
   });
-//  const errors =newsData.validateSync();
+  // ewentualne błędy w wvalidacji danych !
+ const errors = zlecenieData.validateSync();
 //  console.log(errors);
-zlecenieData.save((err)=>{
+  zlecenieData.save((err)=>{
     console.log(err);
+    if(err){
+      res.render('admin/zlecenie_mini',{title:'Dodaj zlecenie',errors,body});
+      return;
+    }
+    res.redirect('/admin')
   });
-  res.redirect('/admin')
+ 
   // console.log(body.zlecajacy);
 })
 
