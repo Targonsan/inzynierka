@@ -57,8 +57,7 @@ router.post('/mini/add',(req,res)=>{
   // console.log(body);
   // funkcja sprawdzajaca co się podało w formualrzu w radio buttons
   // console.log(body.oplacono,'to co wykonało się w body.oplacono');
-  let b
-  console.log('czym ejst b?',b);
+  
   const Radio_button=isPayed(body.oplacono)
   // console.log(Radio_button);
   const vat=0.23*body.c_brutto;

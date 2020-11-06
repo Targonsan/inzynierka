@@ -10,7 +10,7 @@ router.get('/', (req, res, next)=> {
 });
 
 router.get('/login', (req, res, next)=> {
-  res.render('login', { title: 'Logownaie' });
+  res.render('login', { title: 'Logownaie',body:{},errors:{} });
   
 });
 
@@ -43,32 +43,65 @@ router.get('/login', (req, res, next)=> {
 router.post('/login',(req,res)=>{
   console.log('ktoś chce się zalogować !!!!!!!!');
   // sprawdzanie czy w bazie danych jest taki uzytkownik z hasłem i loginem zgadzjacym sie  z wymaganymi
+  console.log(req.body);
+  if(req.body.login.length===0||req.body.password.length===0){
+    let errors={};
+    const body=req.body;
+    if(req.body.login.length===0){
+      errors={errors:[`Nie podałeś Loginu w formularzu !!`]}
+      body.login=''
+    }else{
+      errors={errors:[`Nie podałeś Hasła w formularzu !!`]}
+      
+      body.password=''
+    }
+    res.render('login', { title: 'Logownaie',body,errors });
+    return;
+  }
+  // jak przejdzie dalej to tne warunek bedzie sprawdzany !
   const body=req.body;
+  
   // console.log(req.body);
   LoginModels.findOne({ login:body.login},(err,data)=>{
     console.log('osoba ktora sie logje to :',data);
+    if(data===null){
+      let errors={};
+      errors={errors:[`Nie ma takeigo użytkownika!`]}
+      body.login=''
+      body.password=''
+      res.render('login', { title: 'Logownaie',body,errors });
+      return;
+    }
     if(data.login===body.login && data.password===body.password){
       console.log('zalogowałes sie !');
           req.session.admin=1
           req.session.whoIsLoged=data.login;
           req.session.userSignature=data.signature;
-         
-
-        console.log(req.body);
+        // console.log(req.body);
         res.redirect('/admin')
-    }else{
-      if(data.password!==body.password){
-        console.log('hasło jest niepoprawne');
-        res.redirect('/login')
-      }
+    }else if(data.password!==body.password){
+      let errors={}
+      console.log('hasło jest niepoprawne');
+      errors={errors:[`Niepoprawne hasło !`]}
+      body.password=''
+      res.render('login', { title: 'Logownaie',body,errors});
+    } 
+    else{
+      let errors={};
+      errors={errors:[`NIe ma takeigo użytkownika!`]}
+      body.login=''
+      body.password=''
+      res.render('login', { title: 'Logownaie',body,errors });
+      
     }
+    
   })
 
 })
 
 
 router.get('/rejestration',(req,res)=>{
-  res.render('rejestration',{title:'Rejestracja nowego użytkownika'})
+  res.render('rejestration',{title:'Rejestracja nowego użytkownika',body:{},errors:{}})
 })
 
 router.post('/rejestration',(req,res)=>{
@@ -80,33 +113,45 @@ LoginModels.find(function (err, kittens) {
   if (err) return console.error(err);
   kittens.forEach((item,index)=>{
     if(body.login===item.login ||body.signature===item.signature){
-      console.log('istnieje już taki użytkownik  lub podpis!');
       isUserInBase=true
-      res.redirect('/rejestration')
+      let errors={};
+      if(body.login===item.login){
+        console.log('istnieje już taki użytkownik');
+        errors={errors:[`już istnieje taki użytkownik jak: "${body.login}"`]}
+      // body.login=''
+      }else{
+        console.log('istnieje już taki podpis ');
+        errors={errors:[`Ktoś już używa takiego podpisu: "${body.signature}"`]}
+        // body.signature=''
+      }
+      res.render('rejestration',{title:'Dodaj zlecenie',errors,body});
     }})
     if(isUserInBase!==true){
-      console.log('sTworze nowego użytkownika !');
-    const newsData=new LoginModels({
+     console.log('sTworze nowego użytkownika !');
+      const newsData=new LoginModels({
       login:body.login,
       password:body.password,
       signature:body.signature,
     });
-  //  const errors =newsData.validateSync();
-  //  console.log(errors);
+
+  const errors = newsData.validateSync();
     newsData.save((err)=>{
       console.log(err);
+      if(err){
+       res.render('rejestration',{title:'Dodaj zlecenie',errors,body});
+      return;
+    }
+  
     });
-    res.redirect('/login')
   }
     
       
       
     
     // res.redirect('/login')
-  
+
 
 })
-
 
 })
 
