@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.all('*',(req,res,next)=>{
   if(!req.session.admin){
-    res.redirect('login')
+    res.render('index', { title: 'Strona głowna ',RejestrationSucess:`aby przejsc do panelu Administratora należy się zalogować ` })
   
     return;
   }
@@ -99,4 +99,8 @@ function isPayed(data){
   else return false;
 
 }
+
+// usuwanie postów !
+
+
 module.exports = router;

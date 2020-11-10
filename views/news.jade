@@ -2,5 +2,36 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
-  p=path
+  p
+    a(href='/news/sorted/1/data') sortuj po dacie dodania rosnąco 
+    a(href='/news/sorted/-1/data') sortuj po dacie dodania Malejąco
+    a(href='/news/sorted/1/cena') sortuj po cenie rosnąco 
+    a(href='/news/sorted/-1/cena') sortuj po cenie malejąco 
+    a(href='/news/sorted/1/WhoAdd') Kto dodał alfabetycznie rosnąco
+    a(href='/news/sorted/-1/WhoAdd') Kto dodał alfabetycznie Malejąco
+    a(href='/news/sorted/1/isPayed') oplacone
+    a(href='/news/sorted/-1/isPayed') nieopłacone
+  p
+    
+  table
+    tr
+      th id
+      th oznaczenie wejsciowe
+      th data otrzymania
+      th zlecajacy
+      th oplacono
+      th cena brutto 
+      th kto przyjął
+      th usunięcie
+    each item, index in data
+      tr
+        td=index
+        td=item.oznaczenie_wejsciowe
+        td=nowaData[index]
+        td=item.zlecajacy
+        td= item.oplacono===true?'tak':'nie'
+        td=item.cena_brutto 
+          span  zł  
+        td= item.whoAdd
+        td
+          a(href='/news/delete/'+item._id+'/'+item.zlecajacy ) usuń

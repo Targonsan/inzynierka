@@ -5,12 +5,12 @@ const router = express.Router();
 // nie moge zrefraktoryzwoac require bo musiałby uzyc buuble i skonfigurowa=ny webpack od wesji 12 można używac import i exporta w plikach !
 /* GET home page. */
 router.get('/', (req, res, next)=> {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Strona głowna ',RejestrationSucess:'' });
   console.log(res.locals.dupa);
 });
 
 router.get('/login', (req, res, next)=> {
-  res.render('login', { title: 'Logownaie',body:{},errors:{} });
+  res.render('login', { title: 'Logowanie',body:{},errors:{} });
   
 });
 
@@ -107,10 +107,28 @@ router.get('/rejestration',(req,res)=>{
 router.post('/rejestration',(req,res)=>{
   
 const body=req.body
+if(body.password!==body.password2){
+  let errors={};
+  errors={errors:[`Podane hasła są różne, wpisz je ponownie !`]}
+  res.render('rejestration',{title:'Rejestracja nowego użytkownika',body,errors})
+  return;
+}
+if(body.login.length<6||body.password.length<6){
+  let errors={};
+  if(body.login.length<6){
+    
+    errors={errors:[`twój login jest zbyt krótki, proszę podać co najmniej 6 znaków`]}
+  }else{
+    errors={errors:[`twoje hasło jest zbyt krótkie, powinno mieć przynajmniej 6 znaków !`]}
+  } 
+
+  res.render('rejestration',{title:'Rejestracja nowego użytkownika',body:{},errors})
+  return;
+}
 // sprawdzanie cyz przypadkiem nie ma juz takeigo użytkownika !!
 LoginModels.find(function (err, kittens) {
   let isUserInBase=false;
-  if (err) return console.error(err);
+  if (err) return console.error(err); 
   kittens.forEach((item,index)=>{
     if(body.login===item.login ||body.signature===item.signature){
       isUserInBase=true
@@ -141,7 +159,7 @@ LoginModels.find(function (err, kittens) {
        res.render('rejestration',{title:'Dodaj zlecenie',errors,body});
       return;
     }
-  
+    res.render('index', { title: 'Strona głowna ',RejestrationSucess:`Stworzono pomyślnie nowego użytkownika o nazwie: ${body.login}` });
     });
   }
     

@@ -1,21 +1,22 @@
 doctype html
 mixin item(title,url)
-  li
-    a(href=url class=path==url ? 'active':'')=title
+  li(class='lista')
+    a(href=url class=path==url ? 'active':'')&attributes(attributes)=title
 
+//- -var list=[""]
 
 html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-  span=path
-  span=dupa
   nav
-    ul
-      +item('Storna główna','/')
-      +item('Aktalnosci','/news')
-      +item('Quiz','/quiz')
-      +item('Admin','/admin')
+    ul(class='lista')
+      +item('Storna główna','/')(class='color2')
+      +item('Zlecenia','/news')(class='color1')
+      +item('Quiz','/quiz')(class='color1')
+      +item('Admin','/admin')(class='color2')
+      +item('Logowanie','/login')(class='color1')
+      +item('Rejestracja','/rejestration')(class='color2')
         
     block content
