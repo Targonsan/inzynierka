@@ -24,7 +24,8 @@ router.get('/', (req, res, next)=> {
   // newsData.save((err)=>{
   //   console.log(err);
   // });
-  res.render('admin/index', { title: 'Strona  Admina',user: req.session.whoIsLoged, signature:req.session.userSignature, });
+  
+  res.render('admin/index', { title: 'Strona  Admina',user: req.session.whoIsLoged, signature:req.session.userSignature,grandAdmin:req.session.grandAdmin });
   //user: req.session.whoIsLoged, signature:req.session.userSignature,
 });
 
@@ -49,11 +50,15 @@ router.get('/mini/add',(req,res)=>{
 
 
 });
+function isPayed(data){
+  if(data==='tak') return true;
+  else return false;
 
+}
 router.post('/mini/add',(req,res)=>{
   
   const body=req.body;
-  console.log('dupa')
+  console.log('dodawanie sie udało')
   // console.log(body);
   // funkcja sprawdzajaca co się podało w formualrzu w radio buttons
   // console.log(body.oplacono,'to co wykonało się w body.oplacono');
@@ -94,11 +99,7 @@ router.post('/mini/add',(req,res)=>{
   // console.log(body.zlecajacy);
 })
 
-function isPayed(data){
-  if(data==='tak') return true;
-  else return false;
 
-}
 
 // usuwanie postów !
 

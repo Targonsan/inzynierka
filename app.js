@@ -11,7 +11,8 @@ var config=require('./config')
 //  łaczneie z baza dancyh !
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017', {useNewUrlParser: true});
+// mongoose.connect('mongodb://localhost:27017', {useNewUrlParser: true});
+ mongoose.connect(config.db, {useNewUrlParser: true});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -24,7 +25,8 @@ var newsRouter = require('./routes/news');
 var quizRouter = require('./routes/quiz');
 var adminRouter = require('./routes/admin');
 
-
+//mongodb+srv://Radek123:ZtOiA9nFfqcejJ1W@cluster0.ofbud.mongodb.net/<dbname>?retryWrites=true&w=majority
+//ZtOiA9nFfqcejJ1W - hasło
 var app = express();
 
 // view engine setup
@@ -52,7 +54,7 @@ app.use(cookieSession({
 app.use(function(req,res,next){
   // console.log(req.path);
   res.locals.path=req.path;
-  res.locals.dupa='gej'
+  res.locals.dupa='zmienna jakas tam'
   next();
 });
 // ^  cokolwiek sie dzije to pobiera nam scieżke ! czy tutaj mozna byoby przechowywac dane np kto sie zalogował?

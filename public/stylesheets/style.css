@@ -13,27 +13,23 @@ label{
   margin: 20px;
 }
 div{
-  border:  2px solid black;
-  width: 500px;
-  height: 50px;
-  border-radius: 10px;
-  margin: 5px;
+  
   text-align: center;
 }
-p>a{
+.menu-main p>a{
   border: 3px double;
   border-color: black;
   text-decoration: none;
   
 }
-a:hover
+.menu-main a:hover
 {
   color: blue;
 }
 .notactive{
   color: red;
 }
-ul{
+.menu-main ul{
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -41,11 +37,11 @@ ul{
     background-color: #333333;
   }
   
-li {
+.menu-main li {
     float: left;
   }
   
- li a {
+ .menu-main li a {
     display: block;
     color: white;
     text-align: center;
@@ -53,13 +49,63 @@ li {
     text-decoration: none;
   }
   
-  li a:hover {
+  .menu-main li a:hover {
     background-color: #111111;
   }
   .rejestredSucess{
     color: red;
-    text-decoration: underline;
+    text-decoration: none;
+    font-size: 20px;
+    text-align: center;
   }
-  table, th, td {
+  .menu-main table, th, td {
     border: 1px solid black;
   }
+  .filtrData{
+    width: 400px ;
+    height: 300px;
+  }
+  .filtrData-search{
+    width: 250px ;
+    height: 130px;
+  }
+  .filtrData-allData{
+    width: 400px;
+    height: 300px;
+    /* list-style-type: none; */
+  
+    
+  }
+.filtrData-allData li a{
+  display: block;
+  color: black;
+  text-align: none;
+  padding: 5px 90px;
+  text-decoration: none;
+}
+.filtrData-allData ul
+{ list-style-type: none;
+  margin: 0;
+  padding: 2px;
+  overflow: hidden;
+  background-color: white;
+}
+.filtrData-allData li a:hover{
+
+    background-color:white;
+    color: red;
+ 
+}
+.container{
+  display: flex;
+  flex-direction: row;
+}
+.item{
+  order: 6;
+}
+.filtrData {
+  text-align: left;
+}
+.filtrData-search{
+  text-align: left;
+}

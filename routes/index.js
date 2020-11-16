@@ -6,7 +6,8 @@ const router = express.Router();
 /* GET home page. */
 router.get('/', (req, res, next)=> {
   res.render('index', { title: 'Strona głowna ',RejestrationSucess:'' });
-  console.log(res.locals.dupa);
+  // console.log(res.locals.dupa);
+  console.log(req.ip +' twoj adres ip');
 });
 
 router.get('/login', (req, res, next)=> {
@@ -40,6 +41,21 @@ router.get('/login', (req, res, next)=> {
 //   })
 // })
 // tu bedzie inaczje napisane !!
+
+
+router.get('/logOut',(req,res)=>{
+  
+  res.render('logOut',{title:'Czy chcesz się wylogować?',})
+
+})
+router.get('/logOut/potwierdz',(req,res)=>{
+  req.session.admin=undefined
+  req.session.grandAdmin=undefined
+  req.session.whoIsLoged=undefined
+  req.session.userSignature=undefined
+  res.render('logOut',{title:'Wylogowano !',})
+
+})
 router.post('/login',(req,res)=>{
   console.log('ktoś chce się zalogować !!!!!!!!');
   // sprawdzanie czy w bazie danych jest taki uzytkownik z hasłem i loginem zgadzjacym sie  z wymaganymi
@@ -75,6 +91,10 @@ router.post('/login',(req,res)=>{
     if(data.login===body.login && data.password===body.password){
       console.log('zalogowałes sie !');
           req.session.admin=1
+          if(body.login==="Radeksat"){
+            req.session.grandAdmin=1
+            console.log('jestes zlaogownay jako grand Admin !'+req.session.grandAdmin);
+          }
           req.session.whoIsLoged=data.login;
           req.session.userSignature=data.signature;
         // console.log(req.body);

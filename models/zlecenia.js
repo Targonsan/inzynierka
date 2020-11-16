@@ -14,6 +14,7 @@ const zleceniaSchema = new Schema({
   cena_netto:{type:Number},
   vat:{type:Number},
   whoAdd:{type:String,required:true},
+  storyOfEdit:{type:String}
 });
 // dodaj pole "History of modyfications"
 //bedzie to pole przechowyjace historie modyfikacji wraz z data tej modyfikacji ! !

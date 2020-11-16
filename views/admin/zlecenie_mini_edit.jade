@@ -1,0 +1,60 @@
+extends ../layout
+
+block content
+  h1= title
+  -var maciek=true
+  -var kamil=true
+  if body.oplacono===true
+    -maciek=false
+    -kamil=true
+  else if body.oplacono===false
+   -maciek=true
+   -kamil=false
+  
+  
+  if errors.errors !== undefined
+    each message in errors.errors
+       p(class='notactive')=message
+  h2='Edydtowanie zlecenia o id: ' + body.id 
+    //- sprawdxam czy błędy przy dodawnaiu sie znajduja !!
+  
+
+  form(action="/news/edit/"+body.id method='post')
+    p
+        label oznaczenie porządkowe dotyczące przychodzącego zestawu (pole to składa się z 'zlecajacego' i czegoś jeszcze tak?)
+        input(type="text" name='ozn_wejscia' value=body.oznaczenie_wejsciowe ||'') 
+        if errors.errors !== undefined
+    p
+        label zlecajacy(czyli kto zamówił?)
+        input(type="text" name="zlecajacy" value=body.zlecajacy ||'')
+    p
+        label numer Świadectwa
+        input(type="text" name='nr_swiadectwa' value=body.nr_swiadectwa ||'')
+        //- data otrzymania zlecenia bedzie domyslnie 
+    p
+        label  data otrzymania zlecenia
+        input(type="date" name='d_otrzymania' value=newBodyForData.data_otrzymania ||'')
+    p
+        label płatnik nazwa (czyli cżłowiek, poloa wcześnie 'zlecający' to firma)
+        input(type="text" name="platnik_nazwa" value=body.platnik_nazwa ||'')
+    p
+        label  data zlecenia (w sensie na kiedy ma być gotowe?)
+        input(type="date" name='d_zlecenia' value=newBodyForData.data_zlecenia ||'')
+    p
+        label  data wykonania świadectwa (jak sie nic nie poda to bedzie można to i tak edytować?)
+        input(type="date" name='d_wyk_swiadectwa' value=newBodyForData.data_wyk_swiadectwa ||'')
+    p
+        label kto zatwierdził będzie już zależało od tego kto był zalogowany w momencie dodawanie / edycji zlecenia 
+    p 
+        label czy opłacono zlecenie?
+        br
+        input(type="radio" name='oplacono' value='nie' checked=maciek  )
+        label nie opłacono zamówienia 
+        br
+        input(type="radio" name='oplacono' value='tak' checked=kamil)
+        label opłacono zamówienie 
+    p
+        label cena brutto (cena naetto i vat sam sie doda)
+        input(type="number" name="c_brutto" min="0" max="100000" value=body.cena_brutto || '')
+    p
+        input(type="submit" name='title')

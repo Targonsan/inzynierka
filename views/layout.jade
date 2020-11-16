@@ -10,13 +10,13 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-  nav
+  nav(class='menu-main')
     ul(class='lista')
       +item('Storna główna','/')(class='color2')
       +item('Zlecenia','/news')(class='color1')
-      +item('Quiz','/quiz')(class='color1')
       +item('Admin','/admin')(class='color2')
       +item('Logowanie','/login')(class='color1')
       +item('Rejestracja','/rejestration')(class='color2')
+      +item('Wylogowanie','/logOut')(class='color2')
         
     block content
