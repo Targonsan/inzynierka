@@ -84,6 +84,7 @@ block content
           th cena brutto 
           th kto przyjął
           th edytuj
+          th historia Edycji
           th usunięcie
         each item, index in data
           tr
@@ -97,5 +98,7 @@ block content
             td= item.whoAdd
             td
               a(href='/news/edit/'+item._id) edytuj
+            td
+              a(href='/news/storyOfEdit/'+item._id) Sprawdź
             td
               a(href='/news/delete/'+item._id+'/'+item.zlecajacy+'/'+item.cena_brutto ) usuń

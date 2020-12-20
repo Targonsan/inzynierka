@@ -1,6 +1,5 @@
 doctype html
 mixin item(title,url)
-  li(class='lista')
     a(href=url class=path==url ? 'active':'')&attributes(attributes)=title
 
 //- -var list=[""]
@@ -8,10 +7,9 @@ mixin item(title,url)
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/stylenowe.css')
   body
-  nav(class='menu-main')
-    ul(class='lista')
+  nav(class='topnav')
       +item('Storna główna','/')(class='color2')
       +item('Zlecenia','/news')(class='color1')
       +item('Admin','/admin')(class='color2')

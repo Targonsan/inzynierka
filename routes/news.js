@@ -171,8 +171,6 @@ router.get('/filtrData', (req, res, next)=> {
     res.render('news',{title:'Złożone zlecenia',data,nowaData})
   });
   }
-  
-  
   return;
 });
 
@@ -190,6 +188,16 @@ router.get('/delete/:id/:zlecajacy/:cena_brutto',(req,res)=>{
   )}
  
 })
+
+router.get('/storyOfEdit/:id',(req,res)=>{
+  console.log(req.params);
+  zleceniaModels.findById(req.params.id,(err,data)=>{
+      console.log(data);
+    const story=data.storyOfEdit
+    console.log(typeof(story))
+      res.render('storyOfEdit',{title:'Historia edycji zlecenia',story});
+})
+})
 router.get('/edit/:id',(req,res)=>{
 
   console.log(req.params);
@@ -205,51 +213,109 @@ router.get('/edit/:id',(req,res)=>{
       // console.log(newBodyForData.d_otrzymania);
       res.render('admin/zlecenie_mini_edit',{title:'Edytuj zlecenie',body:data,errors:{},newBodyForData});
   })
-  function isPayed(data){
-    if(data==='tak') return true;
-    else return false;
+})
+
+function isPayed(data){
+  if(data==='tak') return true;
+  else return false;
   
-  }
+}
+
 router.post('/edit/:id',(req,res)=>{
-  console.log(req.params);
-  console.log(req.body);
+  // console.log(req.params);
+  // console.log(req.body);
   const body=req.body
   const Radio_button=isPayed(body.oplacono)
   // console.log(Radio_button);
   const vat=0.23*body.c_brutto;
   const cena_net=body.c_brutto -  vat;
   // const filter={_id:ObjectId(req.params.id)}
-//  console.log(filter._id);
-const id=req.params.id
-  zleceniaModels.findByIdAndUpdate(id,
-    {
-    oznaczenie_wejsciowe:body.ozn_wejscia,
-    zlecajacy:body.zlecajacy,
-    nr_swiadectwa:body.nr_swiadectwa,
-    data_otrzymania:body.d_otrzymania,
-    platnik_nazwa:body.platnik_nazwa,
-    data_zlecenia:body.d_zlecenia,
-    data_wyk_swiadectwa:body.d_wyk_swiadectwa,
-    oplacono:Radio_button,
-    cena_brutto:body.c_brutto,
-    cena_netto:cena_net,
-    vat:vat,
-    whoAdd:req.session.userSignature,},function(err,result){
-      if(err)
-      {
-        console.log(err);
-      }else
-      {
-        console.log("udało się");
-        res.redirect('/news')
-      }
-    });
+  //  console.log(filter._id);
+  const id=req.params.id
+  // console.log(storyOfEdit);
+  let currentData=dataNowtoString()
+  // let oldStory=req.params.storyEdit
+  // if(oldStory.length<12){
+  //   oldStory=''
+  // }
+  // const newStory=oldStory+ ' edytowane '+currentData+' przez '+req.session.userSignature+' '
+  // const newStory=oldStory+ ' edytowane '+currentData+' przez '+req.session.userSignature+' '
+  // let oldData
+  // zleceniaModels.findById(id,(err,data)=>{
+  //   oldData=data
+  // })
 
+  zleceniaModels.findById(id,function(err,data){
+    let tab=`${currentData} przez ${req.session.userSignature}  `
+    // const newStory=' edytowane '+currentData+' przez '+req.session.userSignature+' '
+  if(err){
+    console.log('bład przy popbiernaiu dancyh !!');
+  }
+   console.log( data.oznaczenie_wejsciowe+'kutas');
+   if(data.oznaczenie_wejsciowe!==body.ozn_wejscia){
+    tab+=` oznaczenie_wejsciowe "${data.oznaczenie_wejsciowe}"---->"${body.ozn_wejscia}" `
+    // console.log(tab);
+    
+    data.oznaczenie_wejsciowe=body.ozn_wejscia
+   }if(data.zlecajacy!==body.zlecajacy){
+    tab+=` zlecajacy "${data.zlecajacy}"---->"${body.zlecajacy}" `
+    data.zlecajacy=body.zlecajacy
+   }
+   data.storyOfEdit.push(tab)
+   data.save(function(err){
+     if(err) console.log(err);
+     res.redirect('/news')
+   })
+  })
 
+  // zleceniaModels.findByIdAndUpdate(id,
+  //   {
+  //   oznaczenie_wejsciowe:body.ozn_wejscia,
+  //   zlecajacy:body.zlecajacy,
+  //   nr_swiadectwa:body.nr_swiadectwa,
+  //   data_otrzymania:body.d_otrzymania,
+  //   platnik_nazwa:body.platnik_nazwa,
+  //   data_zlecenia:body.d_zlecenia,
+  //   data_wyk_swiadectwa:body.d_wyk_swiadectwa,
+  //   oplacono:Radio_button,
+  //   cena_brutto:body.c_brutto,
+  //   cena_netto:cena_net,
+  //   vat:vat,
+  //   whoAdd:req.session.userSignature,
+  //   storyOfEdit:newStory
+  //     },function(err,result){
+  //     if(err)
+  //     {
+  //       console.log(err);
+  //     }else
+  //     {
+  //       if(body.c_brutto===toString(result.cena_brutto)){
+  //         console.log('cena nie została zmieniona ');
+  //       }
+  //       console.log('resultat to: ',result);
+  //       console.log('nowa historia: ',newStory);
+  //       console.log("udało się");
+  //       res.redirect('/news')
+  //     }
+  //   });
 
 })
+function dataNowtoString(){
+  let today = new Date();
+  let seconds =today.getSeconds()
+  if(seconds<=9){
+    seconds='0'+seconds;
+  }
+  let minutes=today.getMinutes()
+  if(minutes<=9){
+    minutes='0'+minutes
+  }
+let date =today.getDate()+'-'+(today.getMonth()+1)+'-'+ today.getFullYear()+' o godzinie: '+today.getHours() + ":" + minutes + ":" + seconds;
+  console.log('teraz jest godzina: ', date);
+  return date;
+}
 
-})
+
 function dataChanger2(data){
   console.log(data);
   let day =data.getDate();

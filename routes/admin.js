@@ -41,8 +41,6 @@ router.get('/', (req, res, next)=> {
 
 router.get('/zlecenie/add',(req,res)=>{
   res.render('admin/zlecenie-form',{title:'Dodaj zlecenie'});
-
-
 });
 
 router.get('/mini/add',(req,res)=>{
@@ -82,6 +80,7 @@ router.post('/mini/add',(req,res)=>{
     cena_netto:cena_net,
     vat:vat,
     whoAdd:req.session.userSignature,
+    storyOfEdit:''
 
   });
   // ewentualne błędy w wvalidacji danych !

@@ -1,0 +1,35 @@
+extends layout
+
+block content
+    p
+    div(class="item")
+      table
+        tr
+          th id
+          th data otrzymania
+          th Nazwa firmy
+          th adres
+          th nip
+          th Dane osobowe 
+          th Nr tel
+          th mail firmy
+          th obiekt badany
+          th sprawdz
+        each item, index in data
+          tr
+            td=index
+            td=nowaData[index]
+            td=item.nazwa_firmy
+            td=item.adres
+            td=item.nip
+            td=item.imieINazwisko  
+            td=item.nrTel_firmy
+            td=item.adresMailowyFirmy
+            td=item.Obiekt_bada
+            td
+              a(href='/add/add/'+item._id) wszystkie dane
+            //- td
+            //-   a(href='/news/storyOfEdit/'+item._id) Sprawdź
+            //- td
+            //-   a(href='/news/delete/'+item._id+'/'+item.zlecajacy+'/'+item.cena_brutto ) usuń
+//- item.oplacono===true?'tak':'nie'

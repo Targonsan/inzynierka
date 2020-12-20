@@ -1,0 +1,174 @@
+extends layout
+
+block content
+  h1= title
+  
+
+  if errors.errors !== undefined
+    each message in errors.errors
+       p(class='notactive')=message
+    //- sprawdxam czy błędy przy dodawnaiu sie znajduja !!
+  
+  div(class="container")
+    form( method='post')
+        p
+            label Nazwa firmy 
+            input(type="text" name='nazwa_firmy' value=body.nazwa_firmy ||'') 
+        p
+            label Adres
+            input(type="text" name="adres_firmy" value=body.adres ||'')
+        p
+            label NIP
+            input(type="text" name='nip_firmy' value=body.nip ||'')
+            //- data otrzymania zlecenia bedzie domyslnie 
+        p
+            label  Imie i nazwisko przedstawiciela firmy
+            input(type="text" name='dane_przedstawiciela' value=body.imieINazwisko ||'')
+        p
+            label numer telefonu
+            input(type="text" name="nr_tel_firmy" value=body.nrTel_firmy ||'')
+        
+        p
+            label podaj adres mailowy firmy
+            input(type="email" name='adres_mail_firmy' value=body.adresMailowyFirmy||'')
+        p
+            label Adres email do wysłania faktury 
+            input(type="email" name='adres_mail_faktura' value=body.adresMailowyFaktura ||'')
+        p
+            label Adres fizyczny do wysłania faktury 
+            input(type="text" name='adres_fizyczny_faktura' value=body.AdresFizycznyFaktura ||'')
+        p 
+            h3 Dane płatnika 
+            p
+                label Adres Płatnika
+                input(type="text" name="Adres_platnik" value=body.adres ||'')
+            p
+                label  Imie i nazwisko 
+                input(type="text" name='Dane_platnik' value=body.imieINazwiskoPlatnik ||'')
+            p
+                label numer telefonu
+                input(type="text" name="nr_tel_platnik" value=body.nrTel_Platnik ||'')
+            p
+                label adres mail płatnika
+                input(type="email" name='adres_mail_platnik' value=body.adresMailowyPlatnik ||'')
+    
+            h3 Dane dotyczące zlecenia
+            p
+                label Charakter zlecenia
+                input(type="text" name="char_zlecenia2" value=info.charakter_zlecenia ||'')
+            p
+                label Forma współpracy
+                input(type="text" name="form_wspolpracy2" value=info.Forma_wspolpracy ||'')
+        p
+            label Wyniki badnań podać z niepewnością
+            input(type="text" name="wynik_badan_niepewnosc2" value=info.wynik_badan_niepewnosc ||'')
+            
+        p
+            label Wyniki badnań podać z tolerancją 
+            input(type="text" name="wynik_badan_tolerancja2" value=info.wynik_badan_tolerancja ||'')
+        //- p
+        //-     label Obiekt badań/wzorcowań/pobierania próbek 
+        //- p
+        //-     label Forma: miernik + sonda, miernik2+sonda, itd
+        //-     input(type="text" name="obiekt_badan" value=body.Obiekt_bada ||'')
+        
+        p
+            label  data Świadectwa 
+            input(type="date" name='d_swiadectwa' value=newBodyForData.data_zlecenia ||'')
+        p 
+            label data przekazania miernika
+            input(type="date" name='d_przekazania' value=newBodyForData.data_zlecenia ||'')
+        p
+            label metoda pomiaru
+            input(type="text" name="wynik_badan_tolerancja2" value=info.wynik_badan_tolerancja ||'')
+        p 
+            label cena netto
+            input(type="text" name="wynik_badan_tolerancja2" value=info.wynik_badan_tolerancja ||'')
+
+
+        if obiektBadany.miernik1.nazwa !== ''
+            p
+                h2 miernik nr 1
+                label nazwa miernika
+                input(type="text" name="cel_miernik1_nazwa" value=obiektBadany.miernik1.nazwa ||'')
+            if obiektBadany.miernik1.sonda1 !== ''
+                p
+                    label Sonda nr1
+                    input(type="text" name="cel_miernik1_sonda1" value=obiektBadany.miernik1.sonda1 ||'')
+            if obiektBadany.miernik1.sonda2 !== ''
+                p
+                    label Sonda nr2
+                    input(type="text" name="cel_miernik1_sonda2" value=obiektBadany.miernik1.sonda2 ||'')
+            if obiektBadany.miernik1.sonda3 !== ''
+                p
+                    label Sonda nr3
+                    input(type="text" name="cel_miernik1_sonda3" value=obiektBadany.miernik1.sonda3 ||'')
+            if obiektBadany.miernik1.sonda4 !== ''
+                p
+                    label Sonda nr4
+                    input(type="text" name="cel_miernik1_sonda4" value=obiektBadany.miernik1.sonda4 ||'')
+            if obiektBadany.miernik1.sonda5 !== ''
+                p
+                    label Sonda nr5
+                    input(type="text" name="cel_miernik1_sonda5" value=obiektBadany.miernik1.sonda5 ||'')
+
+        if obiektBadany.miernik2.nazwa !== ''
+            p
+                h2 miernik nr 2
+                label nazwa miernika
+                input(type="text" name="cel_miernik2_nazwa2" value=obiektBadany.miernik2.nazwa ||'')
+            if obiektBadany.miernik2.sonda1 !== ''
+                p
+                    label Sonda nr1
+                    input(type="text" name="cel_miernik2_sonda1" value=obiektBadany.miernik2.sonda1 ||'')
+            if obiektBadany.miernik2.sonda2 !== ''
+                p
+                    label Sonda nr2
+                    input(type="text" name="cel_miernik2_sonda2" value=obiektBadany.miernik2.sonda2 ||'')
+            if obiektBadany.miernik2.sonda3 !== ''
+                p
+                    label Sonda nr3
+                    input(type="text" name="cel_miernik2_sonda3" value=obiektBadany.miernik2.sonda3 ||'')
+            if obiektBadany.miernik2.sonda4 !== ''
+                p
+                    label Sonda nr4
+                    input(type="text" name="cel_miernik2_sonda4" value=obiektBadany.miernik2.sonda4 ||'')
+            if obiektBadany.miernik2.sonda5 !== ''
+                p
+                    label Sonda nr5
+                    input(type="text" name="cel_miernik2_sonda5" value=obiektBadany.miernik2.sonda5 ||'')
+
+        if obiektBadany.miernik3.nazwa !== ''
+            p
+                h2 miernik nr 3
+                label nazwa miernika
+                input(type="text" name="cel_miernik3_nazwa2" value=obiektBadany.miernik3.nazwa ||'')
+            if obiektBadany.miernik3.sonda1 !== ''
+                p
+                    label Sonda nr1
+                    input(type="text" name="cel_miernik3_sonda1" value=obiektBadany.miernik3.sonda1 ||'')
+            if obiektBadany.miernik3.sonda2 !== ''
+                p
+                    label Sonda nr2
+                    input(type="text" name="cel_miernik3_sonda2" value=obiektBadany.miernik3.sonda2 ||'')
+            if obiektBadany.miernik3.sonda3 !== ''
+                p
+                    label Sonda nr3
+                    input(type="text" name="cel_miernik3_sonda3" value=obiektBadany.miernik3.sonda3 ||'')
+            if obiektBadany.miernik3.sonda4 !== ''
+                p
+                    label Sonda nr4
+                    input(type="text" name="cel_miernik3_sonda4" value=obiektBadany.miernik3.sonda4 ||'')
+            if obiektBadany.miernik3.sonda5 !== ''
+                p
+                    label Sonda nr5
+                    input(type="text" name="cel_miernik3_sonda5" value=obiektBadany.miernik3.sonda5 ||'')
+                
+            
+        
+        p
+            label Informacje dodatkowe, uwagi 
+            input(type="text" name="dodatkowe_informacje" value=body.info_dodatkowe ||'')
+
+        p
+            input(type="submit" name='title')

@@ -52,15 +52,16 @@ div{
   .menu-main li a:hover {
     background-color: #111111;
   }
+  .menu-main table, th, td {
+    border: 1px solid black;
+  }
   .rejestredSucess{
     color: red;
     text-decoration: none;
     font-size: 20px;
     text-align: center;
   }
-  .menu-main table, th, td {
-    border: 1px solid black;
-  }
+  
   .filtrData{
     width: 400px ;
     height: 300px;

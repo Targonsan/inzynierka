@@ -12,7 +12,7 @@ var config=require('./config')
 var mongoose = require('mongoose');
 
 // mongoose.connect('mongodb://localhost:27017', {useNewUrlParser: true});
- mongoose.connect(config.db, {useNewUrlParser: true});
+ mongoose.connect(config.db, {useNewUrlParser: true, useFindAndModify: false });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -24,6 +24,7 @@ var indexRouter = require('./routes/index');
 var newsRouter = require('./routes/news');
 var quizRouter = require('./routes/quiz');
 var adminRouter = require('./routes/admin');
+var addRouter = require('./routes/add');
 
 //mongodb+srv://Radek123:ZtOiA9nFfqcejJ1W@cluster0.ofbud.mongodb.net/<dbname>?retryWrites=true&w=majority
 //ZtOiA9nFfqcejJ1W - hasło
@@ -64,6 +65,7 @@ app.use('/', indexRouter);
 app.use('/news', newsRouter);
 app.use('/quiz', quizRouter);
 app.use('/admin', adminRouter);
+app.use('/add', addRouter);
 
 
 
