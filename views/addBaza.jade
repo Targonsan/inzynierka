@@ -10,7 +10,7 @@ block content
     //- sprawdxam czy błędy przy dodawnaiu sie znajduja !!
   
   div(class="container")
-    form( method='post')
+    form(action="/add/add/"+body.id method='post')
         p
             label Nazwa firmy 
             input(type="text" name='nazwa_firmy' value=body.nazwa_firmy ||'') 
@@ -59,6 +59,9 @@ block content
             p
                 label Forma współpracy
                 input(type="text" name="form_wspolpracy2" value=info.Forma_wspolpracy ||'')
+            p
+                label Cel badań/wzorcowania/pobierania próbek
+                input(type="text" name="cel_badan2" value=info.cel_badan ||'')
         p
             label Wyniki badnań podać z niepewnością
             input(type="text" name="wynik_badan_niepewnosc2" value=info.wynik_badan_niepewnosc ||'')
@@ -71,19 +74,21 @@ block content
         //- p
         //-     label Forma: miernik + sonda, miernik2+sonda, itd
         //-     input(type="text" name="obiekt_badan" value=body.Obiekt_bada ||'')
+        //- value=newBodyForData.data_zlecenia ||''
+        //- value=newBodyForData.data_zlecenia ||''
         
         p
             label  data Świadectwa 
-            input(type="date" name='d_swiadectwa' value=newBodyForData.data_zlecenia ||'')
+            input(type="date" name='d_swiadectwa' )
         p 
             label data przekazania miernika
-            input(type="date" name='d_przekazania' value=newBodyForData.data_zlecenia ||'')
+            input(type="date" name='d_przekazania' )
         p
             label metoda pomiaru
-            input(type="text" name="wynik_badan_tolerancja2" value=info.wynik_badan_tolerancja ||'')
+            input(type="text" name="metoda_pomiaru" value=body.cena_netto ||'')
         p 
             label cena netto
-            input(type="text" name="wynik_badan_tolerancja2" value=info.wynik_badan_tolerancja ||'')
+            input(type="number" name="cena_netto" value=body.cena_netto ||'')
 
 
         if obiektBadany.miernik1.nazwa !== ''
@@ -116,7 +121,7 @@ block content
             p
                 h2 miernik nr 2
                 label nazwa miernika
-                input(type="text" name="cel_miernik2_nazwa2" value=obiektBadany.miernik2.nazwa ||'')
+                input(type="text" name="cel_miernik2_nazwa" value=obiektBadany.miernik2.nazwa ||'')
             if obiektBadany.miernik2.sonda1 !== ''
                 p
                     label Sonda nr1
@@ -142,7 +147,7 @@ block content
             p
                 h2 miernik nr 3
                 label nazwa miernika
-                input(type="text" name="cel_miernik3_nazwa2" value=obiektBadany.miernik3.nazwa ||'')
+                input(type="text" name="cel_miernik3_nazwa" value=obiektBadany.miernik3.nazwa ||'')
             if obiektBadany.miernik3.sonda1 !== ''
                 p
                     label Sonda nr1

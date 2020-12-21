@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const zleceniaSchema=require('../models/zlecenia2')
+const zleceniaGlownaBaza=require('../models/zleceniaGlownaBaza')
 
 
 
@@ -57,6 +58,10 @@ router.get('/add/:id',(req,res)=>{
 
     console.log(req.params);
     zleceniaSchema.findById(req.params.id,(err,data)=>{
+      // let newBodyForData={
+      //   d_swiadectwa:'11.11.1111',
+      //   d_przekazania:'11.11.1111',
+      // }
        
        let charakter_zlecenia
        let Forma_wspolpracy
@@ -99,15 +104,109 @@ router.get('/add/:id',(req,res)=>{
         charakter_zlecenia:charakter_zlecenia,
         Forma_wspolpracy:Forma_wspolpracy,
         cel_badan:cel_badan,
-        wynik_badan_niepewnosc,wynik_badan_niepewnosc,
+        wynik_badan_niepewnosc:wynik_badan_niepewnosc,
         wynik_badan_tolerancja:wynik_badan_tolerancja
        }
       //  console.log(info);
       //  console.log(charakter_zlecenia);
       // console.log("adres platnika:",data.adres);
-        res.render('addBaza',{title:'Dodaj zlecenie do głównej bazy danych',errors:{},body:data,info,obiektBadany});
+        res.render('addBaza',{title:'Dodaj zlecenie do głównej bazy danych',errors:{},body:data,info,obiektBadany,});
     })
   })
+
+router.post('/add/:id',(req,res)=>{
+  const body=req.body;
+  let info={
+    charakter_zlecenia:body.char_zlecenia2,
+    Forma_wspolpracy:body.form_wspolpracy2,
+    cel_badan:body.cel_badan2,
+    wynik_badan_niepewnosc:body.wynik_badan_niepewnosc2,
+    wynik_badan_tolerancja:body.wynik_badan_tolerancja2,
+  }
+  // const id=req.params.id
+  let obiektBadany={
+    miernik1:{
+      nazwa:body.cel_miernik1_nazwa,
+      sonda1:body.cel_miernik1_sonda1,
+      sonda2:body.cel_miernik1_sonda2||'',
+      sonda3:body.cel_miernik1_sonda3||'',
+      sonda4:body.cel_miernik1_sonda4||'',
+      sonda5:body.cel_miernik1_sonda5||'',
+    },
+    miernik2:{
+      nazwa:body.cel_miernik2_nazwa||'',
+      sonda1:body.cel_miernik2_sonda1||'',
+      sonda2:body.cel_miernik2_sonda2||'',
+      sonda3:body.cel_miernik2_sonda3||'',
+      sonda4:body.cel_miernik2_sonda4||'',
+      sonda5:body.cel_miernik2_sonda5||'',
+    },
+    miernik3:{
+      nazwa:body.cel_miernik3_nazwa||'',
+      sonda1:body.cel_miernik3_sonda1||'',
+      sonda2:body.cel_miernik3_sonda2||'',
+      sonda3:body.cel_miernik3_sonda3||'',
+      sonda4:body.cel_miernik3_sonda4||'',
+      sonda5:body.cel_miernik_sonda5||'',
+    }
+  };
+
+  const brutto=body.cena_netto*1.23;
+
+    const zlecenieNoweDoGlownej=new zleceniaGlownaBaza({
+        
+      nazwa_firmy:body.nazwa_firmy ,
+      adres: body.adres_firmy,
+      nip:body.nip_firmy,
+
+      imieINazwisko:body.dane_przedstawiciela,
+      nrTel_firmy:body.nr_tel_firmy,
+      adresMailowyFirmy:body.adres_mail_firmy,
+      adresMailowyFaktura:body.adres_mail_faktura,
+      AdresFizycznyFaktura:body.adres_fizyczny_faktura,
+      
+      adresPlatnik:body.Adres_platnik,
+      imieINazwiskoPlatnik:body.Dane_platnik,
+      nrTel_Platnik:body.nr_tel_platnik,
+      adresMailowyPlatnik:body.adres_mail_platnik,
+
+      charakter_zlecenia:body.char_zlecenia2,
+      Forma_wspolpracy:body.form_wspolpracy2,
+      cel_badan:body.cel_badan2,
+      wynik_badan_niepewnosc:body.wynik_badan_niepewnosc2,
+      wynik_badan_tolerancja:body.wynik_badan_tolerancja2,
+      Obiekt_bada:obiektBadany,
+      info_dodatkowe:body.dodatkowe_informacje,
+      data_wyk_swiadectwa:body.d_swiadectwa,
+      data_przekazania_miernika:body.d_swiadectwa,
+      cena_netto:body.cena_netto,
+      cena_brutto:brutto,
+      whoAdd:req.session.userSignature,
+    
+
+      });
+// ewentualne błędy w wvalidacji danych !
+
+  const errors = zlecenieNoweDoGlownej.validateSync();
+
+  zlecenieNoweDoGlownej.save((err)=>{
+  console.log(err);
+    if(err){
+      
+      res.render('addBaza',{title:'Dodaj zlecenie',errors,body,info});
+      return;
+    }
+    res.redirect('/')
+    });
+
+    // res.render('addBaza',{title:'Dodaj zlecenie do głównej bazy danych',errors:{},body:data,info,obiektBadany,});
+  })
+ 
+
+
+
+
+
 
 function obiektBadanyFunkcja(data){
   // console.log(data);
@@ -174,7 +273,30 @@ function obiektBadanyFunkcja(data){
 return kal;
 
 }
-//   res.render('addBaza',{title:'Dodaj zlecenie do bazy danych',body:data,errors:{},newBodyForData});
+router.get('/testowanie', (req, res, next)=> {
+
+  zleceniaGlownaBaza.find({},(err,data)=>{
+      // console.log(data);
+      console.log(typeof(data));
+      let nowaData=[]
+      // let nowaDataOtrzymania=[]
+      // let nowaData_zlecenia
+      data.forEach(element=> {
+        // console.log(typeof(element.data_otrzymania));
+        console.log(element.Obiekt_bada.miernik1);
+      });
+      // console.log(nowaData);
+      // console.log(data);
+      res.render('add', { title: 'Złożone zlecenia ',data,nowaData });
+    })
+
+//   res.render('Oczekujacezamowienia', { title: 'Akceptacja zlecen' });
+});
+
+
+
+//   res.render('addBaza',{title:'Dodaj zlecenie do bazy danych',body:data,errors:{},newBodyForData});app.get('/test', function (req, res) {
+    
 
 
 module.exports = router;

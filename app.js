@@ -25,6 +25,7 @@ var newsRouter = require('./routes/news');
 var quizRouter = require('./routes/quiz');
 var adminRouter = require('./routes/admin');
 var addRouter = require('./routes/add');
+var printRouter = require('./routes/print');
 
 //mongodb+srv://Radek123:ZtOiA9nFfqcejJ1W@cluster0.ofbud.mongodb.net/<dbname>?retryWrites=true&w=majority
 //ZtOiA9nFfqcejJ1W - hasło
@@ -66,6 +67,7 @@ app.use('/news', newsRouter);
 app.use('/quiz', quizRouter);
 app.use('/admin', adminRouter);
 app.use('/add', addRouter);
+app.use('/print', printRouter);
 
 
 

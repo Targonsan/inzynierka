@@ -1,0 +1,140 @@
+extends layout
+
+block content
+  h1= title
+  h2 Póki co można filtrować dodane zlecenia na 3 sposoby, sposoby szukania są niezależne i nie oddziałują na siebie ! 
+  h3 1."Szukaj po konkrentym polu"- należy podać jakei to pole a następenie wypełnić formularz
+  h3 2."Szukaj w danym okresie czasu"- nalezy wybrać interesujacą nas date i pole po jakim ma być filtracja oraz w jaki sposób ma przebiegać
+  h3 3."Przeszukiwanie całej bazy w wybrany sposób !"
+
+  div(class="container item")
+    div(class="filtrData-search")
+      form(action="/news/filtr" method='get')
+        p 1. Szukaj po konkretnym polu 
+        input(type="radio" name='filtr' value='commissioning')
+        label zlecajacy
+        br
+        input(type="radio" name='filtr' value='whoGetIt')
+        label kto przyjął 
+        br
+        input(type="radio" name='filtr' value='markBy')
+        label oznaczenie wejsciowe 
+        br
+        input(type='text' name='search')
+        input(type="submit" value='Szukaj')
+        br
+    div(class="filtrData item")
+      form( action="/news/filtrData" method='get')
+      
+          p 2. Szukaj w danym okresie czasu
+          input(type='date' name='od')
+          input(type='date' name='do')
+        
+          p oraz po jakim polu chcesz filtrować !
+          input(type="radio" name='filtr' value='price')
+          label Cena Brutto
+          br
+          input(type="radio" name='filtr' value='commissioning')
+          label Zlecajacy
+          br
+          input(type="radio" name='filtr' value='Date')
+          label Po dacie orzymania
+          br
+          input(type="radio" name='filtr' value='WhoGetIt')
+          label Kto przyjął
+          br
+          p Malejąco czy rosnąco (Alfabetycznie dla tekstu ) !
+          input(type="radio" name='howSort' value='-1')
+          label malejąco
+          br
+          input(type="radio" name='howSort' value='1')
+          label rosnąco
+          br
+          input(type="submit" value='Szukaj')
+    div(class="filtrData-allData item")
+      p 3. Filtruj cała baze 
+      ul
+        li
+          a(href='/news') wszystkie rekordy z bazy
+        li
+          a(href='/news/sorted/1/data') sortuj po dacie dodania rosnąco 
+        li
+          a(href='/news/sorted/-1/data') sortuj po dacie dodania Malejąco
+        li
+          a(href='/news/sorted/1/cena') sortuj po cenie rosnąco 
+        li
+          a(href='/news/sorted/-1/cena') sortuj po cenie malejąco 
+        li
+          a(href='/news/sorted/1/WhoAdd') kto przyjął lfabetycznie rosnąco
+        li  
+          a(href='/news/sorted/-1/WhoAdd') kto przyjął alfabetycznie Malejąco
+        li
+          a(href='/news/sorted/-1/isPayed') oplacone
+        li
+          a(href='/news/sorted/1/isPayed') nieopłacone
+  p
+    div(class="item")
+      table
+        tr
+          th id
+          th data otrzymania
+          th Kto dodał
+          th Nazwa firmy
+          th adres
+          th imie i nazwisko
+          th nr telefonu 
+          th Adres mailowy firmy
+          th adres majlowy faktura
+          th Adres fizyczny na fakture
+          th Adres platnika
+          th Imie i nazwisko platnika
+          th nr tel platnika
+          th Adres mailow platnika
+          th Charakter zlecenia
+          th forma wspolpracy
+          th Cel badan
+          th z niepewnoscia
+          th z tolerancja
+          th Data wykonania swiadectwa
+          th Data przekazania miernika
+          th Cena netto(zł)
+          th Cena bruto(zł)
+          th Ile mierników oraz sond
+          th dokładne dane mierników 
+          th edytuj
+          th historia Edycji
+          th usunięcie
+        each item, index in data
+          tr
+            td=index
+            td=dataOtrzymania[index]
+            td=item.whoAdd
+            td=item.nazwa_firmy
+            td=item.adres
+            td=item.imieINazwisko
+            td=item.nrTel_firmy 
+            td=item.adresMailowyFirmy
+            td=item.adresMailowyFaktura
+            td=item.AdresFizycznyFaktura
+            td=item.adresPlatnik
+            td=item.imieINazwiskoPlatnik
+            td=item.nrTel_Platnik
+            td=item.adresMailowyPlatnik
+            td=item.charakter_zlecenia
+            td=item.Forma_wspolpracy
+            td=item.cel_badan
+            td=item.wynik_badan_niepewnosc
+            td=item.wynik_badan_tolerancja
+            td=dataWykonaniaswiadectwa[index] 
+            td=dataPrzekazaniaMiernika[index] 
+            td=item.cena_netto
+            td=item.cena_brutto
+            td=Badanie[index]
+            td
+                a(href='/news/edit/'+item._id) Dokładne dane
+            td
+              a(href='/news/edit/'+item._id) edytuj
+            td
+              a(href='/news/storyOfEdit/'+item._id) Sprawdź
+            td
+              a(href='/news/delete/'+item._id+'/'+item.zlecajacy+'/'+item.cena_brutto ) usuń
