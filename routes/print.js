@@ -2,6 +2,14 @@ const express = require('express');
 const router = express.Router();
 const zleceniaGlownaBaza=require('../models/zleceniaGlownaBaza');
 
+router.all('*',(req,res,next)=>{
+  if(!req.session.admin){
+    res.render('index', { title: 'Strona głowna ',RejestrationSucess:`aby przejsc do panelu Administratora należy się zalogować ` })
+  
+    return;
+  }
+  next();
+});
 
 
 function dataChanger(data){
