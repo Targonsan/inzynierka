@@ -16,46 +16,46 @@ block content
             input(type="text" name='nazwa_firmy' value=body.nazwa_firmy ||'') 
         p
             label Adres
-            input(type="text" name="adres_firmy" value=body.adres ||'')
+            input(type="text" name="adres_firmy" value=body.adres || body.adres_firmy || '')
         p
             label NIP
-            input(type="text" name='nip_firmy' value=body.nip ||'')
+            input(type="text" name='nip_firmy' value=body.nip || body.nip_firmy || '')
             //- data otrzymania zlecenia bedzie domyslnie 
         p
             label  Imie i nazwisko przedstawiciela firmy
-            input(type="text" name='dane_przedstawiciela' value=body.imieINazwisko ||'')
+            input(type="text" name='dane_przedstawiciela' value=body.imieINazwisko || body.dane_przedstawiciela || '')
         p
             label numer telefonu
-            input(type="text" name="nr_tel_firmy" value=body.nrTel_firmy ||'')
+            input(type="text" name="nr_tel_firmy" value=body.nrTel_firmy || body.nr_tel_firmy || '')
         
         p
             label podaj adres mailowy firmy
-            input(type="email" name='adres_mail_firmy' value=body.adresMailowyFirmy||'')
+            input(type="email" name='adres_mail_firmy' value=body.adresMailowyFirmy|| body.adres_mail_firmy ||'')
         p
             label Adres email do wysłania faktury 
-            input(type="email" name='adres_mail_faktura' value=body.adresMailowyFaktura ||'')
+            input(type="email" name='adres_mail_faktura' value=body.adresMailowyFaktura || body.adres_mail_faktura ||'')
         p
             label Adres fizyczny do wysłania faktury 
-            input(type="text" name='adres_fizyczny_faktura' value=body.AdresFizycznyFaktura ||'')
+            input(type="text" name='adres_fizyczny_faktura' value=body.AdresFizycznyFaktura || body.adres_fizyczny_faktura ||'')
         p 
             h3 Dane płatnika 
             p
                 label Adres Płatnika
-                input(type="text" name="Adres_platnik" value=body.adres ||'')
+                input(type="text" name="Adres_platnik" value=body.adresPlatnik || body.Adres_platnik ||'')
             p
                 label  Imie i nazwisko 
-                input(type="text" name='Dane_platnik' value=body.imieINazwiskoPlatnik ||'')
+                input(type="text" name='Dane_platnik' value=body.imieINazwiskoPlatnik || body.Dane_platnik ||'')
             p
                 label numer telefonu
-                input(type="text" name="nr_tel_platnik" value=body.nrTel_Platnik ||'')
+                input(type="text" name="nr_tel_platnik" value=body.nrTel_Platnik || body.nr_tel_platnik ||'')
             p
                 label adres mail płatnika
-                input(type="email" name='adres_mail_platnik' value=body.adresMailowyPlatnik ||'')
+                input(type="email" name='adres_mail_platnik' value=body.adresMailowyPlatnik || body.adres_mail_platnik ||'')
     
             h3 Dane dotyczące zlecenia
             p
                 label Charakter zlecenia
-                input(type="text" name="char_zlecenia2" value=info.charakter_zlecenia ||'')
+                input(type="text" name="char_zlecenia2" value=info.charakter_zlecenia || body.char_zlecenia2 ||'')
             p
                 label Forma współpracy
                 input(type="text" name="form_wspolpracy2" value=info.Forma_wspolpracy ||'')
@@ -79,16 +79,16 @@ block content
         
         p
             label  data Świadectwa 
-            input(type="date" name='d_swiadectwa' )
+            input(type="date" name='d_swiadectwa' value=body.d_swiadectwa || '')
         p 
             label data przekazania miernika
-            input(type="date" name='d_przekazania' )
+            input(type="date" name='d_przekazania' value=body.d_przekazania || '')
         p
             label metoda pomiaru
-            input(type="text" name="metoda_pomiaru" value=body.cena_netto ||'')
+            input(type="text" name="metoda_pomiaru" value=body.metoda_pomiaru ||'')
         p 
             label cena netto
-            input(type="number" name="cena_netto" value=body.cena_netto ||'')
+            input(type="number" name="cena_netto" value=body.cena_netto  ||'')
 
 
         if obiektBadany.miernik1.nazwa !== ''
@@ -170,7 +170,14 @@ block content
                     input(type="text" name="cel_miernik3_sonda5" value=obiektBadany.miernik3.sonda5 ||'')
                 
             
-        
+        p 
+        label czy opłacono zlecenie?
+        br
+        input(type="radio" name='oplacono' value='nie')
+        label nie opłacono zamówienia 
+        br
+        input(type="radio" name='oplacono' value='tak')
+        label opłacono zamówienie 
         p
             label Informacje dodatkowe, uwagi 
             input(type="text" name="dodatkowe_informacje" value=body.info_dodatkowe ||'')

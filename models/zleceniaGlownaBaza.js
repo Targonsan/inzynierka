@@ -23,9 +23,10 @@ const zleceniaGlownaBaza = new Schema({
   wynik_badan_tolerancja:{type:String,required:[true,'pole Wyniki badnań podać z tolerancją  jest wymagane']},
   info_dodatkowe:{type:String,},
   data_wyk_swiadectwa: { type: Date, required:[true,'Data wykonania swiadectwa jest wymagana']},
-  data_przekazania_miernika: { type: Date, required:[true,'Data wykonania swiadectwa jest wymagana']},
+  data_przekazania_miernika: { type: Date, required:[true,'Data przekazania miernika jest wymagana']},
   cena_netto:{type:Number},
   cena_brutto:{type:Number},
+  oplacono:{type:Boolean},
   whoAdd:{type:String,required:true},
   Obiekt_bada:{type:{}, required:[true,'pole Obiekt badań/wzorcowań/pobierania próbek  jest wymagane']},
 

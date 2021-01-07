@@ -1,0 +1,87 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+    div(class='mierniki-container')
+        if body.miernik1.nazwa !== ''
+            div(class='mierniki-item')
+                p
+                    span(class="big") miernik nr 1: 
+                
+                    span=body.miernik1.nazwa
+                    
+                if body.miernik1.sonda1 !== ''
+                    p
+                        span(class="big") Sonda nr1: 
+                        label=body.miernik1.sonda1
+                if body.miernik1.sonda2 !== ''
+                    p
+                        span(class="big") Sonda nr2: 
+                        label=body.miernik1.sonda2
+                if body.miernik1.sonda3 !== ''
+                    p
+                        span(class="big") Sonda nr3: 
+                        label=body.miernik1.sonda3
+                if body.miernik1.sonda4 !== ''
+                    p
+                        span(class="big") Sonda nr4: 
+                        label=body.miernik1.sonda4
+                if body.miernik1.sonda5 !== ''
+                    p
+                        span(class="big") Sonda nr5: 
+                        label=body.miernik1.sonda5
+
+            if body.miernik2.nazwa !== ''
+                div(class='mierniki-item')
+                    p
+                        span(class="big") miernik nr 2: 
+                    
+                        span=body.miernik2.nazwa
+                    if body.miernik2.sonda1 !== ''
+                        p
+                            span(class="big") Sonda nr1: 
+                            label=body.miernik2.sonda1
+                    if body.miernik2.sonda2 !== ''
+                        p
+                            span(class="big") Sonda nr2: 
+                            label=body.miernik2.sonda2
+                    if body.miernik2.sonda3 !== ''
+                        p
+                            span(class="big") Sonda nr3: 
+                            label=body.miernik2.sonda3
+                    if body.miernik2.sonda4 !== ''
+                        p
+                            span(class="big") Sonda nr4: 
+                            label=body.miernik2.sonda4
+                    if body.miernik2.sonda5 !== ''
+                        p
+                            span(class="big") Sonda nr5: 
+                            label=body.miernik2.sonda5
+
+            if body.miernik3.nazwa !== ''
+                div(class='mierniki-item')
+                    p
+                        span(class="big") miernik nr 3:  
+                    
+                        span=body.miernik3.nazwa
+                    if body.miernik3.sonda1 !== ''
+                        p
+                            span(class="big") Sonda nr1: 
+                            span=body.miernik3.sonda1
+                    if body.miernik3.sonda2 !== ''
+                        p
+                            span(class="big") Sonda nr2: 
+                            label=body.miernik3.sonda2
+                    if body.miernik3.sonda3 !== ''
+                        p
+                            span(class="big") Sonda nr3: 
+                            label=body.miernik3.sonda3
+                    if body.miernik3.sonda4 !== ''
+                        p
+                            span(class="big") Sonda nr4: 
+                            label=body.miernik3.sonda4
+                    if body.miernik3.sonda5 !== ''
+                        p
+                            span(class="big") Sonda nr5: 
+                            label=body.miernik3.sonda5

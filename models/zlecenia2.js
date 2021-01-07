@@ -6,17 +6,18 @@ const zleceniaSchema = new Schema({
   adres: {type: String, required:[true,'pole Adres jest wymagane'] },
   nip:{type:String, required: [true,'pole nip jest wymagane']},
   data_otrzymania: { type: Date, default: Date.now },
+  CzyDodanoJuz: { type: String, default: false },
 
   imieINazwisko:{type:String, required:[true,'pole imie i nazwisko  jest wymagane']},
   nrTel_firmy:{type:String, required:[true,'pole numer telefonu jest wymagane']},
   adresMailowyFirmy:{type:String, required:[true,'pole Adres mailowy formy jest wymagane']},
   adresMailowyFaktura:{type:String, required:[true,'pole Adres mailowy do wysynia faktury jest wymagane']},
   AdresFizycznyFaktura: { type: String, required:[true,'Adres fizyczny do wysłania faktury   jest wymagany']},
-  adres:{type:String, required:[true,'pole Adres jest wymagane']},
+  adresPlatnik:{type:String, required:[true,'pole Adres jest wymagane']},
   imieINazwiskoPlatnik:{type:String, required:[true,'pole imie i nazwisko  jest wymagane']},
   nrTel_Platnik:{type:String, required:[true,'pole numer telefonu jest wymagane']},
   adresMailowyPlatnik:{type:String, required:[true,'pole Adres mailowy  jest wymagane']},
-
+  
   charakter_zlecenia:{type:Boolean,required:[true,'pole Charakter zlecenia jest wymagane']},
   Forma_wspolpracy:{type:Boolean,required:[true,'pole Forma współpracy  jest wymagane']},
   cel_badan:{type:Boolean,required:[true,'pole Cel badań/wzorcowania/pobierania próbek jest wymagane']},

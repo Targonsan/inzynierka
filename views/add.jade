@@ -14,7 +14,8 @@ block content
           th Nr tel
           th mail firmy
           th obiekt badany
-          th sprawdz
+          th Czy jest już dodany
+          th Uzupełnij  dane i dodaj do głównej bazy danych
         each item, index in data
           tr
             td=index
@@ -26,8 +27,16 @@ block content
             td=item.nrTel_firmy
             td=item.adresMailowyFirmy
             td=item.Obiekt_bada
-            td
-              a(href='/add/add/'+item._id) wszystkie dane
+            if item.CzyDodanoJuz ==="true"
+              td.added dodany już do bazy 
+              td
+               a( class='linkListowy' href='/add/add/'+item._id)   dodaj ponownie
+            else 
+              td.notadded nie ma go jeszcze w bazie
+              td
+                a( class='linkListowy' href='/add/add/'+item._id)   Uzupełnij formularz
+              
+            
             //- td
             //-   a(href='/news/storyOfEdit/'+item._id) Sprawdź
             //- td

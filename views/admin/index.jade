@@ -6,18 +6,14 @@ block content
   p Jesteś zalogowany jako #{user} 
   p Każda zmiana jaka wprowadzisz będzie podpisana twoim podpisem #{signature}
   p Mozesz teraz dodawać i modyfikowac już istniejące zlecenia !
-  p
-    if grandAdmin===undefined
-      p nie mozesz usuwać zlecen 
-    else
-      p(class='rejestredSucess') możesz usuwać zlecenia Bo jestes Wielkim Adminem
-  div (wersja mini działajaca)
+  //- p
+  //-   if grandAdmin===undefined
+  //-     p nie mozesz usuwać zlecen 
+  //-   else
+  //-     p(class='rejestredSucess') możesz usuwać zlecenia Bo jestes Wielkim Adminem
+  div 
     p
-      a(href='/admin/mini/add') Dodaj Zlecenie 
-
-  
-  div ( werjsa z prawie wszystkimi polami z exela, jeszcze nie działa poprawnie przesyłanie)
-    p
-      a(class='notactive' href="/admin/zlecenie/add")  (jeszcze nie działa )! 
+      label sprawdz oczekujące zlecenia i dodaj je do bazy 
+      a(class='notactive linkListowy' href="/add") sprawdz i dodaj
  
 

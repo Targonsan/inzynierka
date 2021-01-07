@@ -45,15 +45,140 @@ router.get('/', (req, res, next)=> {
             // console.log(element.data_otrzymania);
             // console.log(moment().utc().format('D-M-Y'));
             }
+            if(element.CzyDodanoJuz==="false"){
+              console.log("nie dodano mnei jeszcze");
+            } else if(element.CzyDodanoJuz==="true"){
+              console.log("dodano mnie");
+            }
         });
-        console.log(nowaData);
-        console.log(data);
+
+        
+        // console.log(nowaData);
+        // console.log(data);
         res.render('add', { title: 'Złożone zlecenia ',data,nowaData });
       })
 
 //   res.render('Oczekujacezamowienia', { title: 'Akceptacja zlecen' });
 });
 
+//=========================================================================================funkcja do daty
+function dataChanger2(data){
+  console.log(data);
+  let day =data.getDate();
+  let month=data.getMonth()+1;
+  if(day<=9){
+    day='0'+day
+  }
+  if(month<=9){
+    month='0'+ month
+  }
+  let year=data.getFullYear()
+  console.log(`${day}-${month}-${year}`);
+  return `${year}-${month}-${day}`
+
+}
+// ===================================================================================================get edit !
+router.get('/edit/:id',(req,res)=>{
+
+  console.log(req.params);
+  zleceniaGlownaBaza.findById(req.params.id,(err,data)=>{
+    newBodyForData={
+      data_otrzymania:dataChanger2(data.data_otrzymania),
+      data_wyk_swiadectwa:dataChanger2(data.data_wyk_swiadectwa),
+      data_przekazania_miernika:dataChanger2(data.data_przekazania_miernika),
+  }
+
+      res.render('editadd',{title:'Dodaj zlecenie do głównej bazy danych',errors:{},body:data,newBodyForData});
+  })
+})
+
+// =======================================================================================edit add id
+router.post('/edit/:id',(req,res)=>{
+  const id= req.params.id;
+  const body=req.body;
+  const radio_button=isPayed(body.oplacono)
+  
+  let obiektBadany={
+    miernik1:{
+      nazwa:body.cel_miernik1_nazwa,
+      sonda1:body.cel_miernik1_sonda1,
+      sonda2:body.cel_miernik1_sonda2||'',
+      sonda3:body.cel_miernik1_sonda3||'',
+      sonda4:body.cel_miernik1_sonda4||'',
+      sonda5:body.cel_miernik1_sonda5||'',
+    },
+    miernik2:{
+      nazwa:body.cel_miernik2_nazwa||'',
+      sonda1:body.cel_miernik2_sonda1||'',
+      sonda2:body.cel_miernik2_sonda2||'',
+      sonda3:body.cel_miernik2_sonda3||'',
+      sonda4:body.cel_miernik2_sonda4||'',
+      sonda5:body.cel_miernik2_sonda5||'',
+    },
+    miernik3:{
+      nazwa:body.cel_miernik3_nazwa||'',
+      sonda1:body.cel_miernik3_sonda1||'',
+      sonda2:body.cel_miernik3_sonda2||'',
+      sonda3:body.cel_miernik3_sonda3||'',
+      sonda4:body.cel_miernik3_sonda4||'',
+      sonda5:body.cel_miernik_sonda5||'',
+    }
+  };
+
+  const brutto=body.cena_netto*1.23;
+  zleceniaGlownaBaza.findById(id,function(err,data){
+  
+        
+    data.nazwa_firmy=body.nazwa_firmy 
+    data.adres= body.adres_firmy
+    data.nip=body.nip_firmy
+    data.data_otrzymania=body.d_zlec
+
+    data.imieINazwisko=body.dane_przedstawiciela
+    data.nrTel_firmy=body.nr_tel_firmy
+    data.adresMailowyFirmy=body.adres_mail_firmy
+    data.adresMailowyFaktura=body.adres_mail_faktura
+    data.AdresFizycznyFaktura=body.adres_fizyczny_faktura
+      
+    data.adresPlatnik=body.Adres_platnik
+    data.imieINazwiskoPlatnik=body.Dane_platnik
+    data.nrTel_Platnik=body.nr_tel_platnik
+    data.adresMailowyPlatnik=body.adres_mail_platnik
+
+    data.charakter_zlecenia=body.char_zlecenia2
+    data.Forma_wspolpracy=body.form_wspolpracy2
+    data.cel_badan=body.cel_badan2
+    data.wynik_badan_niepewnosc=body.wynik_badan_niepewnosc2
+    data.wynik_badan_tolerancja=body.wynik_badan_tolerancja2
+    data.Obiekt_bada=obiektBadany
+    data.info_dodatkowe=body.dodatkowe_informacje
+    data.data_wyk_swiadectwa=body.d_swiadectwa
+    data.data_przekazania_miernika=body.d_przekazania
+    data.cena_netto=body.cena_netto
+    data.cena_brutto=brutto
+    data.whoAdd=req.session.userSignature
+    data.oplacono=radio_button
+      data.save((err)=>{
+        console.log(err);
+          if(err){
+            
+            res.redirect('/print')
+          }
+          res.redirect('/')
+          });
+   
+// ewentualne błędy w wvalidacji danych !
+
+  
+
+  
+
+    // res.render('addBaza',{title:'Dodaj zlecenie do głównej bazy danych',errors:{},body:data,info,obiektBadany,});
+  })
+})
+
+
+// ===================================================================================================add id
 router.get('/add/:id',(req,res)=>{
 
     console.log(req.params);
@@ -110,12 +235,21 @@ router.get('/add/:id',(req,res)=>{
       //  console.log(info);
       //  console.log(charakter_zlecenia);
       // console.log("adres platnika:",data.adres);
+      console.log(data.adresPlatnik,'adres platnika ' );
         res.render('addBaza',{title:'Dodaj zlecenie do głównej bazy danych',errors:{},body:data,info,obiektBadany,});
     })
   })
 
+  function isPayed(data){
+    if(data==='tak') return true;
+    else return false;
+    
+  }
+
 router.post('/add/:id',(req,res)=>{
   const body=req.body;
+  console.log(body);
+  const radio_button=isPayed(body.oplacono)
   let info={
     charakter_zlecenia:body.char_zlecenia2,
     Forma_wspolpracy:body.form_wspolpracy2,
@@ -150,6 +284,7 @@ router.post('/add/:id',(req,res)=>{
       sonda5:body.cel_miernik_sonda5||'',
     }
   };
+ 
 
   const brutto=body.cena_netto*1.23;
 
@@ -178,12 +313,11 @@ router.post('/add/:id',(req,res)=>{
       Obiekt_bada:obiektBadany,
       info_dodatkowe:body.dodatkowe_informacje,
       data_wyk_swiadectwa:body.d_swiadectwa,
-      data_przekazania_miernika:body.d_swiadectwa,
+      data_przekazania_miernika:body.d_przekazania,
       cena_netto:body.cena_netto,
       cena_brutto:brutto,
       whoAdd:req.session.userSignature,
-    
-
+      oplacono:radio_button,
       });
 // ewentualne błędy w wvalidacji danych !
 
@@ -192,17 +326,35 @@ router.post('/add/:id',(req,res)=>{
   zlecenieNoweDoGlownej.save((err)=>{
   console.log(err);
     if(err){
-      
-      res.render('addBaza',{title:'Dodaj zlecenie',errors,body,info});
+
+      res.render('addBaza',{title:'Dodaj zlecenie',errors,body,info,obiektBadany});
       return;
     }
-    res.redirect('/')
+    changeStatus(req.params.id)
+    res.redirect('/add')
     });
 
     // res.render('addBaza',{title:'Dodaj zlecenie do głównej bazy danych',errors:{},body:data,info,obiektBadany,});
   })
  
-
+  // router.get('add/zmienStatus/:id', (req, res, next)=> {
+  //   zleceniaSchema.findById(req.params.id,(err,data)=>{console.log( 'to co znalazłem');})
+  //   res.redirect('/')
+  // })
+  function changeStatus(id){
+    zleceniaSchema.findByIdAndUpdate(
+      { _id: id },
+      { CzyDodanoJuz: "true" },
+      function(err, result) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("udało sie podmienic ");
+        }
+      }
+    );
+  }
+  
 
 
 

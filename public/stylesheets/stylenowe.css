@@ -9,6 +9,12 @@ input[type=text],select, textarea {
     margin-bottom: 16px; /* Bottom margin */
     resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
   }
+  .added{
+    background-color: green;
+  }
+  .notadded{
+    background-color:  red;
+  }
   input[type=email] {
     width: 100%; /* Full width */
     padding: 12px; /* Some padding */ 
@@ -62,3 +68,71 @@ input[type=text],select, textarea {
   .notactive{
     color: red;
   }
+
+  /* style do wyswietlania filtrów */
+  .container{
+    display: flex;
+    flex-direction: row;
+  }
+  .item{
+    order: 6;
+  }
+  .filtrData {
+    text-align: left;
+  }
+  .filtrData-search{
+    text-align: left;
+  }
+  .filtrData-search{
+    width: 250px ;
+    height: 130px;
+  }
+  /* filtry do tabelki */
+  table {
+    border-spacing: 0.5rem;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  td, th {
+    border: 1px solid #999;
+    text-align: left;
+    /* border-top: 3px solid black; */
+    padding: 0.5rem;
+  }
+  tbody tr:nth-child(odd) {
+    background: #eee;
+  }
+  .ulListy{
+    list-style-type: upper-roman;
+  }
+  .liListy{
+    padding: 4px 5px;
+    
+  }
+ .linkListowy{
+   background-color:silver ; 
+   border: 2px solid black;
+  text-decoration: none;
+  color: black; 
+  font-weight: bold;
+ }
+ .linkListowy:hover{
+  border:3px solid black ;
+
+ }
+ /* style do widoku mierniki */
+ .mierniki-container{
+  display: flex; /* or inline-flex */
+  justify-content:center;
+  align-content:space-between;
+}
+.mierniki-item{
+  padding: 20px;
+  margin: 5px;
+  border: 2px solid black;
+  flex-basis: auto; /* default auto */
+}
+.big{
+  font-size: larger;
+  font-weight: bold;
+}

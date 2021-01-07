@@ -2,45 +2,45 @@ extends layout
 
 block content
   h1= title
-  h2 Póki co można filtrować dodane zlecenia na 3 sposoby, sposoby szukania są niezależne i nie oddziałują na siebie ! 
-  h3 1."Szukaj po konkrentym polu"- należy podać jakei to pole a następenie wypełnić formularz
-  h3 2."Szukaj w danym okresie czasu"- nalezy wybrać interesujacą nas date i pole po jakim ma być filtracja oraz w jaki sposób ma przebiegać
-  h3 3."Przeszukiwanie całej bazy w wybrany sposób !"
+  //- h2 Póki co można filtrować dodane zlecenia na 3 sposoby, sposoby szukania są niezależne i nie oddziałują na siebie ! 
+  //- h3 1."Szukaj po konkrentym polu"- należy podać jakei to pole a następenie wypełnić formularz
+  //- h3 2."Szukaj w danym okresie czasu"- nalezy wybrać interesujacą nas date i pole po jakim ma być filtracja oraz w jaki sposób ma przebiegać
+  //- h3 3."Przeszukiwanie całej bazy w wybrany sposób !"
 
   div(class="container item")
     div(class="filtrData-search")
-      form(action="/news/filtr" method='get')
+      form(action="/print/filtr" method='get')
         p 1. Szukaj po konkretnym polu 
         input(type="radio" name='filtr' value='commissioning')
-        label zlecajacy
+        label Nazwa firmy
         br
-        input(type="radio" name='filtr' value='whoGetIt')
-        label kto przyjął 
+        input(type="radio" name='filtr' value='whoAddIt')
+        label Kto dodał do bazy 
         br
-        input(type="radio" name='filtr' value='markBy')
-        label oznaczenie wejsciowe 
+        input(type="radio" name='filtr' value='mail')
+        label Adres mailowy firmy
+        br
+        input(type="radio" name='filtr' value='imieINazwisko')
+        label imie i nazwisko klienta
         br
         input(type='text' name='search')
         input(type="submit" value='Szukaj')
         br
     div(class="filtrData item")
-      form( action="/news/filtrData" method='get')
+      form( action="/print/filtrData" method='get')
       
           p 2. Szukaj w danym okresie czasu
           input(type='date' name='od')
           input(type='date' name='do')
         
           p oraz po jakim polu chcesz filtrować !
-          input(type="radio" name='filtr' value='price')
-          label Cena Brutto
+          input(type="radio" name='filtr' value='cena_brutto')
+          label Cena 
           br
-          input(type="radio" name='filtr' value='commissioning')
-          label Zlecajacy
-          br
-          input(type="radio" name='filtr' value='Date')
+          input(type="radio" name='filtr' value='char_zlec')
           label Po dacie orzymania
           br
-          input(type="radio" name='filtr' value='WhoGetIt')
+          input(type="radio" name='filtr' value='WhoAddIt')
           label Kto przyjął
           br
           p Malejąco czy rosnąco (Alfabetycznie dla tekstu ) !
@@ -53,30 +53,31 @@ block content
           input(type="submit" value='Szukaj')
     div(class="filtrData-allData item")
       p 3. Filtruj cała baze 
-      ul
-        li
-          a(href='/news') wszystkie rekordy z bazy
-        li
-          a(href='/news/sorted/1/data') sortuj po dacie dodania rosnąco 
-        li
-          a(href='/news/sorted/-1/data') sortuj po dacie dodania Malejąco
-        li
-          a(href='/news/sorted/1/cena') sortuj po cenie rosnąco 
-        li
-          a(href='/news/sorted/-1/cena') sortuj po cenie malejąco 
-        li
-          a(href='/news/sorted/1/WhoAdd') kto przyjął lfabetycznie rosnąco
-        li  
-          a(href='/news/sorted/-1/WhoAdd') kto przyjął alfabetycznie Malejąco
-        li
-          a(href='/news/sorted/-1/isPayed') oplacone
-        li
-          a(href='/news/sorted/1/isPayed') nieopłacone
+      ul(class='ulListy')
+        li(class='liListy')
+          a(class='linkListowy' href='/print') wszystkie rekordy z bazy
+        li(class='liListy')
+          a(class='linkListowy' href='/print/sorted/1/data') sortuj po dacie dodania rosnąco 
+        li(class='liListy')
+          a(class='linkListowy' href='/print/sorted/-1/data') sortuj po dacie dodania Malejąco
+        li(class='liListy')
+          a(class='linkListowy' href='/print/sorted/1/cena') sortuj po cenie rosnąco 
+        li(class='liListy')
+          a(class='linkListowy' href='/print/sorted/-1/cena') sortuj po cenie malejąco 
+        li(class='liListy')
+          a(class='linkListowy' href='/print/sorted/1/WhoAdd') kto przyjął lfabetycznie rosnąco
+        li(class='liListy')  
+          a(class='linkListowy' href='/print/sorted/-1/WhoAdd') kto przyjął alfabetycznie Malejąco
+        li(class='liListy')
+          a(class='linkListowy' href='/print/sorted/-1/isPayed') oplacone
+        li(class='liListy')
+          a(class='linkListowy' href='/print/sorted/1/isPayed') nieopłacone
   p
     div(class="item")
       table
         tr
-          th id
+          th lp
+          th id w bazie
           th data otrzymania
           th Kto dodał
           th Nazwa firmy
@@ -84,7 +85,8 @@ block content
           th imie i nazwisko
           th nr telefonu 
           th Adres mailowy firmy
-          th adres majlowy faktura
+          th adres mailowy faktura
+          th Nip firmy
           th Adres fizyczny na fakture
           th Adres platnika
           th Imie i nazwisko platnika
@@ -99,14 +101,16 @@ block content
           th Data przekazania miernika
           th Cena netto(zł)
           th Cena bruto(zł)
+          th oplacono
           th Ile mierników oraz sond
           th dokładne dane mierników 
           th edytuj
-          th historia Edycji
-          th usunięcie
+          //- th historia Edycji
+          //- th usunięcie
         each item, index in data
           tr
             td=index
+            td=item._id
             td=dataOtrzymania[index]
             td=item.whoAdd
             td=item.nazwa_firmy
@@ -115,6 +119,7 @@ block content
             td=item.nrTel_firmy 
             td=item.adresMailowyFirmy
             td=item.adresMailowyFaktura
+            td=item.nip
             td=item.AdresFizycznyFaktura
             td=item.adresPlatnik
             td=item.imieINazwiskoPlatnik
@@ -129,12 +134,13 @@ block content
             td=dataPrzekazaniaMiernika[index] 
             td=item.cena_netto
             td=item.cena_brutto
+            td=oplacono[index]
             td=Badanie[index]
             td
-                a(href='/news/edit/'+item._id) Dokładne dane
+                a(href='/print/daneMiernika/'+item._id target="_blank") Dokładne dane
             td
-              a(href='/news/edit/'+item._id) edytuj
-            td
-              a(href='/news/storyOfEdit/'+item._id) Sprawdź
-            td
-              a(href='/news/delete/'+item._id+'/'+item.zlecajacy+'/'+item.cena_brutto ) usuń
+              a(href='/add/edit/'+item._id) edytuj
+            //- td
+            //-   a(href='/news/storyOfEdit/'+item._id) Sprawdź
+            //- td
+            //-   a(href='/news/delete/'+item._id+'/'+item.zlecajacy+'/'+item.cena_brutto ) usuń
