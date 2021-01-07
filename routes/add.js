@@ -5,14 +5,14 @@ const zleceniaGlownaBaza=require('../models/zleceniaGlownaBaza')
 
 
 
-// router.all('*',(req,res,next)=>{
-//     if(!req.session.admin){
-//       res.render('index', { title: 'Strona głowna ',RejestrationSucess:`aby przejsc do panelu Administratora należy się zalogować ` })
-    
-//       return;
-//     }
-//     next();
-//   });
+router.all('*',(req,res,next)=>{
+  if(!req.session.admin){
+    res.render('index', { title: 'Strona głowna ',RejestrationSucess:`aby przejsc do panelu Administratora należy się zalogować ` })
+  
+    return;
+  }
+  next();
+});
 
 function dataChanger(data){
     let day =data.data_otrzymania.getDate();
